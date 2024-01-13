@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, collectionGroup, doc, getDoc, getDocs, setDoc, limit, where } from 'firebase/firestore/lite';
 // TODO: CHANGE DATABASE RULES 
+// TODO AUTHENTICATION
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhncq1fGLGDqkAi93hoHK-_jX-orJhHIs",
@@ -28,8 +29,16 @@ export const diningHalls = {
 const diningHallsPath = "dining-halls"
 const entreesPath = "entrees"
 
+
+/**
+ * gets the path name for the entree
+ * @param {string} entree the pretty name of the entree
+ * @returns the database name of the entree, with whitespace and special symbols removed
+ */
 function toDbName(entree) {
-  return entree.toLowerCase().replace(" ", "-");
+  // make lowercase, replace whitespace with dashes
+  // remove special symbols
+  return entree.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 }
 
 /**
@@ -74,36 +83,34 @@ export async function getReviews(diningHall, entree) {
 /**
  * Create a review for a given entree at a dining hall. 
  * @param {string} diningHall the diningHall to get entrees for. Use diningHalls enum
- * @param {string} entree the name of the entree. Use the value from getEntrees
+ * @param {string} entree the "pretty" name of the entree
  * @param {string} reviewText the text of the review
  * @param {number} reviewRating the rating of the review
  */
-export async function addReview(diningHall, entree, reviewText, reviewRating) {
-  const reviewsRef = collection(db, diningHallsPath, diningHall, entreesPath, entree, "reviews");
+export function addReview(diningHall, entree, reviewText, reviewRating) {
+  const reviewsRef = collection(db, diningHallsPath, diningHall, entreesPath, toDbName(entree), "reviews");
 
   const reviewData = {
     text: reviewText,
     rating: reviewRating
+    // add date, reviewer name?
   }
 
-  await setDoc(doc(reviewsRef), reviewData);
+  return setDoc(doc(reviewsRef), reviewData);
 }
 
 /**
  * Adds an entree to the database if there is a new entree today
  * @param {string} diningHall the diningHall to get entrees for. Use diningHalls enum
- * @param {string} entree the name of the entree. Use the value from getEntrees
+ * @param {string} entree the "pretty" name of the entree
  */
 
-export async function addEntree(diningHall, entree) {
+export function addEntree(diningHall, entree) {
   const entreesRef = collection(db, diningHallsPath, diningHall, entreesPath);
 
   const entreeData = {
     name: entree
   }
 
-  await setDoc(doc(entreesRef), entreeData);
+  return setDoc(doc(entreesRef, toDbName(entree)), entreeData);
 }
-
-
-

@@ -4,19 +4,23 @@ import {fetchData} from './fetchData'
 import './App.css'
 
 function App() {
-  const [pokemonData, setPokemonData] = useState(null);
+  const [diningData, setDiningData] = useState(null);
 
   useEffect(() => {
-    fetchData(setPokemonData);
+    fetchData(setDiningData);
   }, []);
+
+  const handleClick = () => {
+    fetchData(setDiningData);
+  }
 
   return (
     <>
       <div>
-        {pokemonData && (
+        {diningData && (
         <>
-          <h1>Pokemon Name: {pokemonData.name}</h1>
-          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} width={200} height={200}/>
+          <button type={"button"} onClick={handleClick}>Get new meal</button>
+          <h1>Data: {diningData.name}</h1>
         </>
       )}
       </div>

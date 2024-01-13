@@ -36,7 +36,7 @@ function App() {
         {pokemonData && (
         <>
           <h1>Pokemon Name: {pokemonData.name}</h1>
-          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
+          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} width={200} height={200}/>
         </>
       )}
       </div>

@@ -17,13 +17,20 @@ function App() {
   return (
     <>
       <div>
-        {diningData && (
+      {diningData && (
         <>
-          <button type={"button"} onClick={handleClick}>Get new meal</button>
-          <h1>Data: {diningData.name}</h1>
+          <button type="button" onClick={handleClick}>
+            Get new meal
+          </button>
+          <h1>Data:</h1>
+          <ul>
+            {diningData.map((foodItem) => (
+              <li key={foodItem.id}>{foodItem.name}</li>
+            ))}
+          </ul>
         </>
       )}
-      </div>
+    </div>
     </>
   )
 }

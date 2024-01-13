@@ -6,7 +6,6 @@ async function fetchData(setDiningData){
   // Try block
   try{
     const URL = getURL("2024-01-13T00:00:00", "portola", "dinner")
-    console.log(JSON.stringify(import.meta.env.VITE_REACT_APP_API_KEY));
     const response = await fetch(URL, {
       headers: {
         "ucsb-api-key": import.meta.env.VITE_REACT_APP_API_KEY

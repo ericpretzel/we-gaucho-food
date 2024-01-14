@@ -6,7 +6,8 @@ async function fetchData(setDiningData, selectedOption){
   // Try block
   try{
     console.log(selectedOption);
-    const date = new Date();
+    const currentDate = new Date();
+    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
     console.log(date.toISOString());
     const URL = getURL(date.toISOString(), selectedOption, "dinner")
     const response = await fetch(URL, {

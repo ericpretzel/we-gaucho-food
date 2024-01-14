@@ -32,7 +32,7 @@ const Sidenav = () => {
                             <span className='pl-4'>Carrillo</span>
                         </a>
                         <a 
-                            href="/De La Guerra" 
+                            href="/DeLaGuerra" 
                             className='w-[75%] flex justify-center items-center rounded-full shadow-lg bg-gray-100 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-200'
                         >
                             <FaD size={20} />
@@ -58,7 +58,7 @@ const Sidenav = () => {
                         <a href="/Carrillo" className='rounded-full shadow-lg bg-gray-100 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300'>
                             <FaC />
                         </a>
-                        <a href="/De La Guerra" className='rounded-full shadow-lg bg-gray-100 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300'>
+                        <a href="/DeLaGuerra" className='rounded-full shadow-lg bg-gray-100 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300'>
                             <FaD />
                         </a>
                         <a href="/Portola" className='rounded-full shadow-lg bg-gray-100 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300'>
@@ -66,10 +66,6 @@ const Sidenav = () => {
                         </a>
                     </div>
                 </div>
-
-
-
-
         </div>
     );
 };

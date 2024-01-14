@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import Main from './pages/Home/Main'
 import Sidenav from './assets/components/Sidenav'
 import FoodDisplay from './pages/FoodDisplay/FoodDisplay'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { diningHalls } from './firebase'
+
 
 function App() {
 

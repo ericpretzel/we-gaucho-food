@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, collectionGroup, doc, writeBatch, getDocs, setDoc, limit, where } from 'firebase/firestore/lite';
+import { getFirestore, collection, collectionGroup, doc, writeBatch, getDocs, setDoc } from 'firebase/firestore/lite';
 // TODO: CHANGE DATABASE RULES 
 // TODO AUTHENTICATION
 
@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 export const diningHalls = {
   CARRILLO: "carrillo",
-  DLG: "dlg",
+  DLG: "de-la-guerra",
   ORTEGA: "ortega",
   PORTOLA: "portola"
 }

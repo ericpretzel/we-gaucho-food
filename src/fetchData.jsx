@@ -42,6 +42,7 @@ async function fetchData(setDiningData, diningHall){
 
       const data = await res.json();
       for(var j = 0; j < data.length; j++){
+        data[j].meal = meal;
         foods.push(data[j]);
       }
 
@@ -52,10 +53,10 @@ async function fetchData(setDiningData, diningHall){
     for (var i = 0; i < foods.length; i++) {
       const entree = foods[i];
       const entreeReviews = reviews.find((it) => it.name === entree.name);
-      var total = 0;
-      if (entreeReviews) {
+      if (entreeReviews && entreeReviews.reviews.length > 0) {
+        var total = 0;
         for (var j = 0; j < entreeReviews.reviews.length; j++) {
-          total += entreeReviews.reviews[j].rating;
+          total += parseInt(''+entreeReviews.reviews[j].rating);
         }
         entree.rating = total / entreeReviews.reviews.length;
       } else {

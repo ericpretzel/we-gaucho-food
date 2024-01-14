@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../fetchData';
 import Modal from 'react-modal';
 import FoodItemDetailsPage from './FoodItemDetailsPage';
+import { diningHalls } from '../../firebase';
 
 const FoodDisplay = (props) => {
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
@@ -10,11 +11,10 @@ const FoodDisplay = (props) => {
 
   useEffect(() => {
     fetchData(setFoodItems, props.name);
-
   }, []);
 
   const headerStyle = {
-    backgroundImage: 'url("https://thebottomline.as.ucsb.edu/wp-content/uploads/2019/01/IMG_8344.jpg', // Replace "your-image-url.jpg" with the actual URL of your image
+    backgroundImage: 'url("https://dining.ucsb.edu/sites/default/files/images/heroimages/carrillo-outdoor-patio.jpg',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     color: '#ffffff',
@@ -22,6 +22,14 @@ const FoodDisplay = (props) => {
     textAlign: 'center',
     fontFamily: 'Helvetica Neue, sans-serif',
   };
+
+  if (props.name === diningHalls.CARRILLO) {
+    headerStyle.backgroundImage = 'url("https://dining.ucsb.edu/sites/default/files/images/heroimages/carrillo-outdoor-patio.jpg'
+  } else if (props.name === diningHalls.DLG) {
+    headerStyle.backgroundImage = 'url("https://thebottomline.as.ucsb.edu/wp-content/uploads/2019/01/IMG_8344.jpg'
+  } else if (props.name === diningHalls.PORTOLA) {
+    headerStyle.backgroundImage = 'url("https://dining.ucsb.edu/sites/default/files/images/heroimages/hero-portola-1.jpg'
+  }
 
   const subHeaderStyle = {
     backgroundColor: '#0b193b',
@@ -34,17 +42,17 @@ const FoodDisplay = (props) => {
   const cardStyle = {
     border: '2px solid #0b193b',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    padding: '5%',
-    margin: '5%',
+    padding: '1%',
+    margin: '1%',
     borderRadius: '12px',
     backgroundColor: '#ffffff',
     fontFamily: 'Helvetica Neue, sans-serif',
     transition: 'box-shadow 0.3s',
-    width: '40%',
-    minWidth: '200px',
+    width: '20%',
+    minWidth: '100px',
   };
 
-  const mealTimes = ['Breakfast', 'Lunch', 'Dinner'];
+  const mealTimes = ['Breakfast', 'Brunch', 'Lunch', 'Dinner'];
 
   const linkStyle = {
     color: '#3498db',
@@ -80,7 +88,7 @@ const FoodDisplay = (props) => {
       transform: 'translate(-50%, -50%)',
       border: 'none',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      padding: '16px',
+      padding: '4px',
       borderRadius: '8px',
       backgroundColor: '#ffffff',
       minWidth: '80%', // Adjust the width as needed
@@ -92,7 +100,7 @@ const FoodDisplay = (props) => {
     <div>
       {/* Header */}
       <div style={headerStyle}>
-        <h1 className="text-xl font-bold">{props.displayName}</h1>
+        <h1 className="text-xl font-bold" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: '2px' }}>{props.displayName}</h1>
       </div>
 
       {/* Sub Headers and Food Cards */}
@@ -102,14 +110,14 @@ const FoodDisplay = (props) => {
             <h2 className="text-lg font-semibold">{mealTime}</h2>
           </div>
           <div className="flex flex-wrap">
-            {foodItems.map((foodItem, index) => (
+            {foodItems.filter((foodItem) => foodItem.meal === mealTime).map((foodItem, index) => (
               <div key={index} style={cardStyle}>
                 <h2 className="text-lg font-semibold">
                   <button onClick={() => openModal(foodItem)} style={linkStyle}>
                     {foodItem.name}
                   </button>
                 </h2>
-                <p>Rating: {5}/5</p>
+                <p>Rating: {typeof(foodItem.rating) === 'number' ? foodItem.rating.toFixed(1) : foodItem.rating}/5 ({foodItem.reviews.length} Reviews)</p>
               </div>
             ))}
           </div>
@@ -141,7 +149,7 @@ const FoodDisplay = (props) => {
           </svg>
         </div>
         {selectedFoodItem && (
-          <FoodItemDetailsPage foodItem={selectedFoodItem} />
+          <FoodItemDetailsPage foodItem={selectedFoodItem} diningHall={props.name} />
         )}
       </Modal>
     </div>

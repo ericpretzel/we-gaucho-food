@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchData } from '../../fetchData';
 import Modal from 'react-modal';
 import FoodItemDetailsPage from './FoodItemDetailsPage';
 
 const FoodDisplay = (props) => {
   const [selectedFoodItem, setSelectedFoodItem] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [foodItems, setFoodItems] = useState([]);
+
+  useEffect(() => {
+    fetchData(setFoodItems, props.name);
+
+  }, []);
+
   const headerStyle = {
     backgroundImage: 'url("https://thebottomline.as.ucsb.edu/wp-content/uploads/2019/01/IMG_8344.jpg', // Replace "your-image-url.jpg" with the actual URL of your image
     backgroundSize: 'cover',
@@ -37,13 +45,6 @@ const FoodDisplay = (props) => {
   };
 
   const mealTimes = ['Breakfast', 'Lunch', 'Dinner'];
-
-  const foodItems = [
-    { name: 'Food Item 1', rating: 8.3 },
-    { name: 'Food Item 2', rating: 9.5 },
-    { name: 'Food Item 3', rating: 7.2 },
-    // Add more food items as needed
-  ];
 
   const linkStyle = {
     color: '#3498db',
@@ -108,7 +109,7 @@ const FoodDisplay = (props) => {
                     {foodItem.name}
                   </button>
                 </h2>
-                <p>Rating: {foodItem.rating.toFixed(1)}/10</p>
+                <p>Rating: {5}/5</p>
               </div>
             ))}
           </div>

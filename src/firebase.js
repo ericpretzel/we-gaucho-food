@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, collectionGroup, doc, getDoc, getDocs, setDoc, limit, where } from 'firebase/firestore/lite';
+import { getFirestore, collection, collectionGroup, doc, writeBatch, getDocs, setDoc, limit, where } from 'firebase/firestore/lite';
 // TODO: CHANGE DATABASE RULES 
 // TODO AUTHENTICATION
 
@@ -105,12 +105,16 @@ export function addReview(diningHall, entree, reviewText, reviewRating) {
  * @param {string} entree the "pretty" name of the entree
  */
 
-export function addEntree(diningHall, entree) {
+export function addEntrees(diningHall, entrees) {
+  const batch = writeBatch(db);
   const entreesRef = collection(db, diningHallsPath, diningHall, entreesPath);
 
-  const entreeData = {
-    name: entree
+  for (const entree of entrees) {
+    const entreeData = {
+      name: entree.name
+    }
+    batch.set(doc(entreesRef, toDbName(entreeData.name)), entreeData);
   }
 
-  return setDoc(doc(entreesRef, toDbName(entree)), entreeData);
+  return batch.commit();
 }

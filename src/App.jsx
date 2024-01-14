@@ -18,9 +18,6 @@ function App() {
     }
   };
 
-
-
-
   // Webpage
   return (
     <>
@@ -35,8 +32,8 @@ function App() {
       {diningData && (
         <>
           <ul>
-            {diningData.map((item) => (
-              <li key={item.name}>{item.name}</li>
+            {diningData.map((item, index) => (
+              <li key={index}>{item.name}</li>
             ))}
           </ul>
         </>

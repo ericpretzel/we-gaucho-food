@@ -2,19 +2,24 @@ function getURL(date_time, dining_hall, meal){
   return `https://api.ucsb.edu/dining/menu/v1/${date_time}/${dining_hall}/${meal}`
 }
 
-async function fetchData(setDiningData){
+async function fetchData(setDiningData, selectedOption){
   // Try block
   try{
-    const URL = getURL("2024-01-13T00:00:00", "portola", "dinner")
+    console.log(selectedOption);
+    const date = new Date();
+    console.log(date.toISOString());
+    const URL = getURL(date.toISOString(), selectedOption, "dinner")
     const response = await fetch(URL, {
       headers: {
         "ucsb-api-key": import.meta.env.VITE_REACT_APP_API_KEY
       }
     });
 
+    console.log(response);
+
     // Throw error if response is not ok
     if(!response.ok){
-      throw new Error("could not fetch from api")
+      throw new Error(response.statusText)
     }
 
     const data = await response.json()
